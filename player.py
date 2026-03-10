@@ -18,8 +18,8 @@ class Player:
         
         # Attack & Tank State
         self.is_attacking = False
-        self.tank_type = "basic" # Level 5 choice: 'twin' or 'flank'
-
+        # Inventory: { "Rarity": Count }
+        self.inventory = {}
     def gain_xp(self, amount):
         """Adds XP and handles leveling logic."""
         self.xp += amount
@@ -82,11 +82,37 @@ class Player:
     def draw(self, screen, camera_x, camera_y):
         sx, sy = int(self.x - camera_x), int(self.y - camera_y)
         
-        # Player Body + Outline
+        # 1. Player Body + Outline (Preserved Detail)
         pygame.draw.circle(screen, (40, 40, 40), (sx, sy), self.radius + 3)
         pygame.draw.circle(screen, self.color, (sx, sy), self.radius)
         
-        # Dual Health Bar (BG and FG)
+        # --- NEW: Face Logic ---
+        # Calculate eye direction based on vertical movement
+        # We'll use a simple offset logic
+        keys = pygame.key.get_pressed()
+        eye_dir = 0
+        if keys[pygame.K_w]: eye_dir = -2
+        if keys[pygame.K_s]: eye_dir = 2
+
+        # Draw White Oval Eyes (stretched in Y-axis)
+        # Left eye rect and Right eye rect
+        left_eye_rect = pygame.Rect(sx - 10, sy - 8, 6, 10)
+        right_eye_rect = pygame.Rect(sx + 4, sy - 8, 6, 10)
+        
+        pygame.draw.ellipse(screen, (255, 255, 255), left_eye_rect)
+        pygame.draw.ellipse(screen, (255, 255, 255), right_eye_rect)
+
+        # Draw Black Pupils (moving up/down based on movement)
+        pygame.draw.circle(screen, (0, 0, 0), (sx - 7, sy - 3 + eye_dir), 2)
+        pygame.draw.circle(screen, (0, 0, 0), (sx + 7, sy - 3 + eye_dir), 2)
+
+        # Draw Small Smiling Mouth
+        # draw.arc(surface, color, rect, start_angle, stop_angle, width)
+        mouth_rect = pygame.Rect(sx - 5, sy + 2, 10, 8)
+        pygame.draw.arc(screen, (40, 40, 40), mouth_rect, math.pi, 0, 2)
+        # -----------------------
+
+        # 2. Dual Health Bar (Preserved Detail)
         bar_w, bar_h = 50, 8
         bx, by = sx - bar_w // 2, sy + self.radius + 12
         pygame.draw.rect(screen, (50, 50, 50), (bx, by, bar_w, bar_h), border_radius=2)

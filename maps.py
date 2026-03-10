@@ -6,8 +6,8 @@ class WorldMap:
         self.width_px = 3000
         self.height_px = 3000
         self.grid_size = 50
-        self.bg_color = (230, 230, 230)
-        self.grid_color = (200, 200, 200)
+        self.bg_color = (2, 230, 0)
+        self.grid_color = (0,0, 0)
 
     def is_colliding(self, x, y, radius):
         """Simple boundary collision for the world edges."""
