@@ -5,13 +5,14 @@ import random
 class Bee:
     # Color mapping for different rarities
     RARITY_COLORS = {
-        "Common": (100, 100, 100),   # Grey
-        "Rare": (0, 150, 255),       # Blue
-        "Epic": (160, 32, 240),      # Purple
-        "Legendary": (255, 120, 0),  # Orange
-        "Mythic": (255, 0, 0),       # Red
-        "Ultra": (0, 255, 255),      # Cyan
-        "Super": (255, 100, 150)     # Pink
+        "Common": (124, 239, 149),
+        "Rare": (107, 178, 249),
+        "Epic": (191, 131, 255),
+        "Legendary": (255, 227, 85),
+        "Mythic": (255, 105, 105),
+        "Ultra": (255, 113, 229),
+        "Super": (48, 48, 48),
+        "Unique": (255, 255, 255) # Unique is pure white/glower": (255, 100, 150)     # Pink
     }
 
     def __init__(self, x, y, rarity="Common"):
